@@ -123,25 +123,14 @@ func newLine(author, text string, date time.Time, hash plumbing.Hash) *Line {
 }
 
 func newLines(contents []string, commits []*object.Commit) ([]*Line, error) {
-	lcontents := len(contents)
-	lcommits := len(commits)
-
-	if lcontents != lcommits {
-		if lcontents == lcommits-1 && contents[lcontents-1] != "\n" {
-			contents = append(contents, "\n")
-		} else {
-			return nil, errors.New("contents and commits have different length")
-		}
+	if len(contents) != len(commits) {
+		return nil, errors.New("contents and commits have different length")
 	}
-
-	result := make([]*Line, 0, lcontents)
+	result := make([]*Line, 0, len(contents))
 	for i := range contents {
-		result = append(result, newLine(
-			commits[i].Author.Email, contents[i],
-			commits[i].Author.When, commits[i].Hash,
-		))
+		l := newLine(commits[i].Author.Email, contents[i], commits[i].Author.When, commits[i].Hash)
+		result = append(result, l)
 	}
-
 	return result, nil
 }
 
@@ -193,7 +182,7 @@ func (b *blame) fillGraphAndData() error {
 		// this first commit.
 		if i == 0 {
 			for j := 0; j < nLines; j++ {
-				b.graph[i][j] = b.revs[i]
+				b.graph[i][j] = (*object.Commit)(b.revs[i])
 			}
 		} else {
 			// if this is not the first commit, then assign to the old
@@ -211,7 +200,7 @@ func (b *blame) sliceGraph(i int) []*object.Commit {
 	fVs := b.graph[i]
 	result := make([]*object.Commit, 0, len(fVs))
 	for _, v := range fVs {
-		c := *v
+		c := object.Commit(*v)
 		result = append(result, &c)
 	}
 	return result
@@ -234,7 +223,7 @@ func (b *blame) assignOrigin(c, p int) {
 				b.graph[c][dl] = b.graph[p][sl]
 			case hunks[h].Type == 1:
 				dl++
-				b.graph[c][dl] = b.revs[c]
+				b.graph[c][dl] = (*object.Commit)(b.revs[c])
 			case hunks[h].Type == -1:
 				sl++
 			default:

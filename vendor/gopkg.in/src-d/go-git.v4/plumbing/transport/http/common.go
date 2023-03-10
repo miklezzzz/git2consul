@@ -4,7 +4,6 @@ package http
 import (
 	"bytes"
 	"fmt"
-	"net"
 	"net/http"
 	"strconv"
 	"strings"
@@ -139,7 +138,7 @@ func (s *session) ApplyAuthToRequest(req *http.Request) {
 		return
 	}
 
-	s.auth.SetAuth(req)
+	s.auth.setAuth(req)
 }
 
 func (s *session) ModifyEndpointIfRedirect(res *http.Response) {
@@ -152,18 +151,6 @@ func (s *session) ModifyEndpointIfRedirect(res *http.Response) {
 		return
 	}
 
-	h, p, err := net.SplitHostPort(r.URL.Host)
-	if err != nil {
-		h = r.URL.Host
-	}
-	if p != "" {
-		port, err := strconv.Atoi(p)
-		if err == nil {
-			s.endpoint.Port = port
-		}
-	}
-	s.endpoint.Host = h
-
 	s.endpoint.Protocol = r.URL.Scheme
 	s.endpoint.Path = r.URL.Path[:len(r.URL.Path)-len(infoRefsPath)]
 }
@@ -175,7 +162,7 @@ func (*session) Close() error {
 // AuthMethod is concrete implementation of common.AuthMethod for HTTP services
 type AuthMethod interface {
 	transport.AuthMethod
-	SetAuth(r *http.Request)
+	setAuth(r *http.Request)
 }
 
 func basicAuthFromEndpoint(ep *transport.Endpoint) *BasicAuth {
@@ -192,7 +179,7 @@ type BasicAuth struct {
 	Username, Password string
 }
 
-func (a *BasicAuth) SetAuth(r *http.Request) {
+func (a *BasicAuth) setAuth(r *http.Request) {
 	if a == nil {
 		return
 	}
@@ -212,38 +199,6 @@ func (a *BasicAuth) String() string {
 	}
 
 	return fmt.Sprintf("%s - %s:%s", a.Name(), a.Username, masked)
-}
-
-// TokenAuth implements an http.AuthMethod that can be used with http transport
-// to authenticate with HTTP token authentication (also known as bearer
-// authentication).
-//
-// IMPORTANT: If you are looking to use OAuth tokens with popular servers (e.g.
-// GitHub, Bitbucket, GitLab) you should use BasicAuth instead. These servers
-// use basic HTTP authentication, with the OAuth token as user or password.
-// Check the documentation of your git server for details.
-type TokenAuth struct {
-	Token string
-}
-
-func (a *TokenAuth) SetAuth(r *http.Request) {
-	if a == nil {
-		return
-	}
-	r.Header.Add("Authorization", fmt.Sprintf("Bearer %s", a.Token))
-}
-
-// Name is name of the auth
-func (a *TokenAuth) Name() string {
-	return "http-token-auth"
-}
-
-func (a *TokenAuth) String() string {
-	masked := "*******"
-	if a.Token == "" {
-		masked = "<empty>"
-	}
-	return fmt.Sprintf("%s - %s", a.Name(), masked)
 }
 
 // Err is a dedicated error to return errors based on status code

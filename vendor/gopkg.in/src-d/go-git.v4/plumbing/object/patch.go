@@ -2,8 +2,6 @@ package object
 
 import (
 	"bytes"
-	"context"
-	"errors"
 	"fmt"
 	"io"
 	"math"
@@ -17,25 +15,10 @@ import (
 	dmp "github.com/sergi/go-diff/diffmatchpatch"
 )
 
-var (
-	ErrCanceled = errors.New("operation canceled")
-)
-
 func getPatch(message string, changes ...*Change) (*Patch, error) {
-	ctx := context.Background()
-	return getPatchContext(ctx, message, changes...)
-}
-
-func getPatchContext(ctx context.Context, message string, changes ...*Change) (*Patch, error) {
 	var filePatches []fdiff.FilePatch
 	for _, c := range changes {
-		select {
-		case <-ctx.Done():
-			return nil, ErrCanceled
-		default:
-		}
-
-		fp, err := filePatchWithContext(ctx, c)
+		fp, err := filePatch(c)
 		if err != nil {
 			return nil, err
 		}
@@ -46,7 +29,7 @@ func getPatchContext(ctx context.Context, message string, changes ...*Change) (*
 	return &Patch{message, filePatches}, nil
 }
 
-func filePatchWithContext(ctx context.Context, c *Change) (fdiff.FilePatch, error) {
+func filePatch(c *Change) (fdiff.FilePatch, error) {
 	from, to, err := c.Files()
 	if err != nil {
 		return nil, err
@@ -69,12 +52,6 @@ func filePatchWithContext(ctx context.Context, c *Change) (fdiff.FilePatch, erro
 
 	var chunks []fdiff.Chunk
 	for _, d := range diffs {
-		select {
-		case <-ctx.Done():
-			return nil, ErrCanceled
-		default:
-		}
-
 		var op fdiff.Operation
 		switch d.Type {
 		case dmp.DiffEqual:
@@ -93,11 +70,6 @@ func filePatchWithContext(ctx context.Context, c *Change) (fdiff.FilePatch, erro
 		from:   c.From,
 		to:     c.To,
 	}, nil
-
-}
-
-func filePatch(c *Change) (fdiff.FilePatch, error) {
-	return filePatchWithContext(context.Background(), c)
 }
 
 func fileContent(f *File) (content string, isBinary bool, err error) {
@@ -278,7 +250,7 @@ func printStat(fileStats []FileStat) string {
 	var scaleFactor float64
 	if longestTotalChange > heightOfHistogram {
 		// Scale down to heightOfHistogram.
-		scaleFactor = longestTotalChange / heightOfHistogram
+		scaleFactor = float64(longestTotalChange / heightOfHistogram)
 	} else {
 		scaleFactor = 1.0
 	}
@@ -320,22 +292,11 @@ func getFileStatsFromFilePatches(filePatches []fdiff.FilePatch) FileStats {
 		}
 
 		for _, chunk := range fp.Chunks() {
-			s := chunk.Content()
-			if len(s) == 0 {
-				continue
-			}
-
 			switch chunk.Type() {
 			case fdiff.Add:
-				cs.Addition += strings.Count(s, "\n")
-				if s[len(s)-1] != '\n' {
-					cs.Addition++
-				}
+				cs.Addition += strings.Count(chunk.Content(), "\n")
 			case fdiff.Delete:
-				cs.Deletion += strings.Count(s, "\n")
-				if s[len(s)-1] != '\n' {
-					cs.Deletion++
-				}
+				cs.Deletion += strings.Count(chunk.Content(), "\n")
 			}
 		}
 

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"io"
 	"os"
-	"sync"
 	"time"
 
 	"github.com/go-git/go-git/v5/plumbing"
@@ -420,19 +419,8 @@ func (s *ObjectStorage) getFromUnpacked(h plumbing.Hash) (obj plumbing.EncodedOb
 
 	s.objectCache.Put(obj)
 
-	bufp := copyBufferPool.Get().(*[]byte)
-	buf := *bufp
-	_, err = io.CopyBuffer(w, r, buf)
-	copyBufferPool.Put(bufp)
-
+	_, err = io.Copy(w, r)
 	return obj, err
-}
-
-var copyBufferPool = sync.Pool{
-	New: func() interface{} {
-		b := make([]byte, 32*1024)
-		return &b
-	},
 }
 
 // Get returns the object with the given hash, by searching for it in

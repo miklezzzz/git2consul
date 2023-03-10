@@ -170,7 +170,7 @@ func (s *Scanner) scanEscape(val bool) {
 	switch ch {
 	case '\\', '"':
 		// ok
-	case 'n', 't', 'b':
+	case 'n', 't':
 		if val {
 			break // ok
 		}
@@ -232,10 +232,10 @@ loop:
 				s.next()
 			}
 			if s.ch != '\n' {
-				s.scanEscape(true)
-			} else {
-				s.next()
+				s.error(offs, "unquoted '\\' must be followed by new line")
+				break loop
 			}
+			s.next()
 		case ch == '"':
 			inQuote = !inQuote
 		case ch == '\r':

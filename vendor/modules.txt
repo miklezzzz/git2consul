@@ -87,7 +87,7 @@ github.com/go-git/go-billy/v5/helper/polyfill
 github.com/go-git/go-billy/v5/memfs
 github.com/go-git/go-billy/v5/osfs
 github.com/go-git/go-billy/v5/util
-# github.com/go-git/go-git/v5 v5.6.0
+# github.com/go-git/go-git/v5 v5.6.0 => github.com/ZauberNerd/go-git/v5 v5.4.3-0.20220315170230-29ec1bc1e5db
 ## explicit; go 1.13
 github.com/go-git/go-git/v5
 github.com/go-git/go-git/v5/config
@@ -105,7 +105,6 @@ github.com/go-git/go-git/v5/plumbing/format/index
 github.com/go-git/go-git/v5/plumbing/format/objfile
 github.com/go-git/go-git/v5/plumbing/format/packfile
 github.com/go-git/go-git/v5/plumbing/format/pktline
-github.com/go-git/go-git/v5/plumbing/hash
 github.com/go-git/go-git/v5/plumbing/object
 github.com/go-git/go-git/v5/plumbing/protocol/packp
 github.com/go-git/go-git/v5/plumbing/protocol/packp/capability
@@ -132,7 +131,6 @@ github.com/go-git/go-git/v5/utils/merkletrie/filesystem
 github.com/go-git/go-git/v5/utils/merkletrie/index
 github.com/go-git/go-git/v5/utils/merkletrie/internal/frame
 github.com/go-git/go-git/v5/utils/merkletrie/noder
-github.com/go-git/go-git/v5/utils/sync
 # github.com/gorilla/mux v1.8.0
 ## explicit; go 1.12
 github.com/gorilla/mux
@@ -178,11 +176,6 @@ github.com/mitchellh/go-homedir
 # github.com/mitchellh/mapstructure v1.4.1
 ## explicit; go 1.14
 github.com/mitchellh/mapstructure
-# github.com/pjbgf/sha1cd v0.3.0
-## explicit; go 1.19
-github.com/pjbgf/sha1cd
-github.com/pjbgf/sha1cd/internal
-github.com/pjbgf/sha1cd/ubc
 # github.com/pkg/errors v0.9.1
 ## explicit
 github.com/pkg/errors
@@ -192,10 +185,7 @@ github.com/pmezard/go-difflib/difflib
 # github.com/sergi/go-diff v1.1.0
 ## explicit; go 1.12
 github.com/sergi/go-diff/diffmatchpatch
-# github.com/skeema/knownhosts v1.1.0
-## explicit; go 1.17
-github.com/skeema/knownhosts
-# github.com/src-d/gcfg v1.4.0
+# github.com/src-d/gcfg v1.3.0
 ## explicit
 github.com/src-d/gcfg
 github.com/src-d/gcfg/scanner
@@ -239,6 +229,10 @@ golang.org/x/sys/execabs
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
+# golang.org/x/text v0.4.0
+## explicit; go 1.17
+golang.org/x/text/transform
+golang.org/x/text/unicode/norm
 # gopkg.in/src-d/go-billy.v4 v4.3.2
 ## explicit
 gopkg.in/src-d/go-billy.v4
@@ -246,12 +240,11 @@ gopkg.in/src-d/go-billy.v4/helper/chroot
 gopkg.in/src-d/go-billy.v4/helper/polyfill
 gopkg.in/src-d/go-billy.v4/osfs
 gopkg.in/src-d/go-billy.v4/util
-# gopkg.in/src-d/go-git.v4 v4.13.1
+# gopkg.in/src-d/go-git.v4 v4.4.0
 ## explicit
 gopkg.in/src-d/go-git.v4
 gopkg.in/src-d/go-git.v4/config
 gopkg.in/src-d/go-git.v4/internal/revision
-gopkg.in/src-d/go-git.v4/internal/url
 gopkg.in/src-d/go-git.v4/plumbing
 gopkg.in/src-d/go-git.v4/plumbing/cache
 gopkg.in/src-d/go-git.v4/plumbing/filemode
@@ -279,7 +272,7 @@ gopkg.in/src-d/go-git.v4/plumbing/transport/server
 gopkg.in/src-d/go-git.v4/plumbing/transport/ssh
 gopkg.in/src-d/go-git.v4/storage
 gopkg.in/src-d/go-git.v4/storage/filesystem
-gopkg.in/src-d/go-git.v4/storage/filesystem/dotgit
+gopkg.in/src-d/go-git.v4/storage/filesystem/internal/dotgit
 gopkg.in/src-d/go-git.v4/storage/memory
 gopkg.in/src-d/go-git.v4/utils/binary
 gopkg.in/src-d/go-git.v4/utils/diff
@@ -298,3 +291,4 @@ gopkg.in/yaml.v2
 # gopkg.in/yaml.v3 v3.0.1
 ## explicit
 gopkg.in/yaml.v3
+# github.com/go-git/go-git/v5 => github.com/ZauberNerd/go-git/v5 v5.4.3-0.20220315170230-29ec1bc1e5db
