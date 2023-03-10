@@ -1,4 +1,4 @@
-BINARY = git2consul
+BINARY = git2consul-go
 COMMIT := $(shell git rev-parse HEAD)
 BRANCH := $(shell git symbolic-ref --short -q HEAD || echo HEAD)
 DATE := $(shell date -u +%Y%m%d-%H:%M:%S)
@@ -16,7 +16,7 @@ clean:
 
 .PHONY: build
 build:
-	CGO_ENABLED=0 go build -o $(BINARY) -ldflags $(LDFLAGS)
+	CGO_ENABLED=0 go build -o $(BINARY)
 
 .PHONY: vendor
 vendor:
