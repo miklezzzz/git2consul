@@ -20,7 +20,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/KohlsTechnology/git2consul-go/repository"
+	"github.com/miklezzzz/git2consul/repository"
 	"github.com/apex/log"
 	"github.com/go-git/go-git/v5/plumbing"
 )

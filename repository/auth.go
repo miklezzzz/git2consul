@@ -17,7 +17,7 @@ limitations under the License.
 package repository
 
 import (
-	"github.com/KohlsTechnology/git2consul-go/config"
+	"github.com/miklezzzz/git2consul/config"
 	"github.com/go-git/go-git/v5/plumbing/transport"
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"

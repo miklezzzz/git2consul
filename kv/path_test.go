@@ -19,9 +19,9 @@ package kv
 import (
 	"testing"
 
-	"github.com/KohlsTechnology/git2consul-go/config"
-	"github.com/KohlsTechnology/git2consul-go/kv/mocks"
-	"github.com/KohlsTechnology/git2consul-go/repository"
+	"github.com/miklezzzz/git2consul/config"
+	"github.com/miklezzzz/git2consul/kv/mocks"
+	"github.com/miklezzzz/git2consul/repository"
 	"github.com/stretchr/testify/assert"
 )
 

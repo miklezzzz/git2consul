@@ -22,9 +22,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/KohlsTechnology/git2consul-go/config"
-	"github.com/KohlsTechnology/git2consul-go/pkg/version"
-	"github.com/KohlsTechnology/git2consul-go/runner"
+	"github.com/miklezzzz/git2consul/config"
+	"github.com/miklezzzz/git2consul/pkg/version"
+	"github.com/miklezzzz/git2consul/runner"
 	"github.com/apex/log"
 	"github.com/apex/log/handlers/json"
 	"github.com/apex/log/handlers/text"

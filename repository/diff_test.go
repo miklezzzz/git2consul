@@ -21,8 +21,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/KohlsTechnology/git2consul-go/config/mock"
-	"github.com/KohlsTechnology/git2consul-go/repository/mocks"
+	"github.com/miklezzzz/git2consul/config/mock"
+	"github.com/miklezzzz/git2consul/repository/mocks"
 	"github.com/stretchr/testify/assert"
 	git "github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/utils/merkletrie"

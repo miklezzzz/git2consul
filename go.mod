@@ -3,7 +3,6 @@ module git2consul-go
 go 1.19
 
 require (
-	github.com/KohlsTechnology/git2consul-go v0.1.1
 	github.com/apex/log v1.9.0
 	github.com/go-git/go-git/v5 v5.6.0
 	github.com/gorilla/mux v1.8.0

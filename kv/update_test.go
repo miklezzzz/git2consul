@@ -25,8 +25,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/KohlsTechnology/git2consul-go/config"
-	"github.com/KohlsTechnology/git2consul-go/kv/mocks"
+	"github.com/miklezzzz/git2consul/config"
+	"github.com/miklezzzz/git2consul/kv/mocks"
 	"github.com/apex/log"
 	"github.com/stretchr/testify/assert"
 )

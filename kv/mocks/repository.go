@@ -19,7 +19,7 @@ package mocks
 import (
 	"testing"
 
-	"github.com/KohlsTechnology/git2consul-go/config"
+	"github.com/miklezzzz/git2consul/config"
 	"gopkg.in/src-d/go-billy.v4/osfs"
 	git "github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
