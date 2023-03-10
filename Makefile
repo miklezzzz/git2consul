@@ -1,4 +1,4 @@
-BINARY = git2consul-go
+BINARY = git2consul
 COMMIT := $(shell git rev-parse HEAD)
 BRANCH := $(shell git symbolic-ref --short -q HEAD || echo HEAD)
 DATE := $(shell date -u +%Y%m%d-%H:%M:%S)
